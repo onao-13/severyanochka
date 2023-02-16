@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/georgysavva/scany/pgxscan"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/sirupsen/logrus"
 	"severyanochka/internals/app/entity/product"
 )
 
@@ -12,8 +11,6 @@ import (
 type ProductRepository struct {
 	pool *pgxpool.Pool
 }
-
-var log = logrus.New()
 
 // NewProductRepository Создание репозитория продуктов
 func NewProductRepository(pool *pgxpool.Pool) *ProductRepository {

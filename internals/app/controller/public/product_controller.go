@@ -19,28 +19,6 @@ func NewProductController(service *service.ProductService) *ProductController {
 	return controller
 }
 
-//TODO: Добавить подсчет процента по карте магазина
-
-// PreviewMainPage Контроллер для отправки всех данных главной страницы.
-// Содержит:
-//
-// - список акций
-//
-// - список новинок
-//
-// - список последних покупок пользователя
-//
-// - специальные предложения
-//
-// - статьи
-func (controller *ProductController) PreviewMainPage(w http.ResponseWriter, r *http.Request) {
-	var result = map[string][]response.ProductResponse{
-		"stock":       controller.service.GetStock(),
-		"newProducts": controller.service.GetNewProducts(),
-	}
-	rest.WrapOk(result, w)
-}
-
 // SearchByName Поиск продукта по названию
 func (controller *ProductController) SearchByName(w http.ResponseWriter, r *http.Request) {
 	var products []response.ProductResponse
