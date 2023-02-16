@@ -52,13 +52,17 @@ func (server *Server) Start() {
 	defer server.pool.Close()
 
 	productRepository := repository.NewProductRepository(server.pool)
+	articleRepository := repository.NewArticleRepository(server.pool)
 
 	productService := service.NewProductService(productRepository)
+	articleService := service.NewArticleService(articleRepository)
 
 	productController := public.NewProductController(productService)
 	helpController := help.New(md.New())
+	mainPageController := public.NewMainPageController(articleService, productService)
+	articleController := public.NewArticleController(articleService)
 
-	routes := api.CreateRoute(productController, helpController)
+	routes := api.CreateRoute(productController, helpController, mainPageController, articleController)
 
 	server.srv = &http.Server{
 		Addr:    ":" + server.cfg.Port,

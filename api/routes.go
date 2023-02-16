@@ -15,11 +15,14 @@ const (
 func CreateRoute(
 	productController *public.ProductController,
 	helpController *help.HelpController,
+	mainPageController *public.MainPageController,
+	articleController *public.ArticleController,
 ) *mux.Router {
 	route := mux.NewRouter()
 	//REST API
-	route.HandleFunc(restApiPath+"page/preview-main", productController.PreviewMainPage).Methods("GET")
+	route.HandleFunc(restApiPath+"page/preview-main", mainPageController.PreviewMainPage).Methods("GET")
 	route.HandleFunc(restApiPath+"products/search", productController.SearchByName).Methods("GET").Queries("q", "{q}")
+	route.HandleFunc(restApiPath+"articles/search/{id:[0-9]+}", articleController.FindById).Methods("GET")
 	//HTML DOC API
 	route.HandleFunc(helpApiPath+"main-page", helpController.ShowMainPageDoc)
 	return route
