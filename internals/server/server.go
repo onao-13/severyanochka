@@ -53,16 +53,19 @@ func (server *Server) Start() {
 
 	productRepository := repository.NewProductRepository(server.pool)
 	articleRepository := repository.NewArticleRepository(server.pool)
+	specialOffersRepository := repository.NewSpecialOffersRepository(server.pool)
 
 	productService := service.NewProductService(productRepository)
 	articleService := service.NewArticleService(articleRepository)
+	specialOffersService := service.NewSpecialOffersService(specialOffersRepository)
 
 	productController := public.NewProductController(productService)
 	helpController := help.New(md.New())
-	mainPageController := public.NewMainPageController(articleService, productService)
+	mainPageController := public.NewMainPageController(articleService, productService, specialOffersService)
 	articleController := public.NewArticleController(articleService)
+	specialOffersController := public.NewSpecialOffersController(specialOffersService)
 
-	routes := api.CreateRoute(productController, helpController, mainPageController, articleController)
+	routes := api.CreateRoute(productController, helpController, mainPageController, articleController, specialOffersController)
 
 	server.srv = &http.Server{
 		Addr:    ":" + server.cfg.Port,
