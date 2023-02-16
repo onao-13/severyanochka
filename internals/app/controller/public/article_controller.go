@@ -10,18 +10,21 @@ import (
 	"strconv"
 )
 
+// ArticleController Контроллер для работы со статьями
 type ArticleController struct {
 	service *service.ArticleService
 }
 
 var log = logrus.New()
 
+// NewArticleController Создает новый контроллер статей
 func NewArticleController(service *service.ArticleService) *ArticleController {
 	controller := new(ArticleController)
 	controller.service = service
 	return controller
 }
 
+// FindById Поиск статьи по айди
 func (controller *ArticleController) FindById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 

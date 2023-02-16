@@ -8,18 +8,21 @@ import (
 	"severyanochka/internals/app/entity/site"
 )
 
+// ArticleRepository Репозиторий для работы в бд со site.Articles
 type ArticleRepository struct {
 	pool *pgxpool.Pool
 }
 
 var log = logrus.New()
 
+// NewArticleRepository Создает новый репозиторий статей
 func NewArticleRepository(pool *pgxpool.Pool) *ArticleRepository {
 	repository := new(ArticleRepository)
 	repository.pool = pool
 	return repository
 }
 
+// GetAll Получить первые 20 статей, отсортированные по дате по убыванию
 func (repository *ArticleRepository) GetAll() []site.Articles {
 	var articles []site.Articles
 
@@ -33,6 +36,7 @@ func (repository *ArticleRepository) GetAll() []site.Articles {
 	return articles
 }
 
+// FindById Поиск статьи по айди
 func (repository *ArticleRepository) FindById(id int64) site.Articles {
 	var article site.Articles
 
