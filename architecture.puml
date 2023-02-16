@@ -1,0 +1,94 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+'Контроллеры
+struct AccountController {
+
+}
+
+struct BasketController {
+
+}
+
+struct ArticleController {
+
+}
+
+struct CategoryController {
+
+}
+
+struct OrderController {
+
+}
+
+struct ProductController {
+    {field} service ProductService
+    {method} NewProductController(ProductService)
+    {method} PreviewMainPage(ResponseWriter, Request)
+    {method} SearchByName(ResponseWriter, Request)
+}
+
+'Ответ сервера
+struct ProductResponse {
+
+}
+
+'База данных
+entity Categories {
+
+}
+
+entity Products {
+
+}
+
+entity Reviews {
+
+}
+
+entity Articles {
+
+}
+
+entity SpecialOffers {
+
+}
+
+entity UserBasket {
+
+}
+
+entity UserFavorites {
+
+}
+
+entity Users {
+
+}
+
+'Репозитории
+struct ProductRepository {
+
+}
+
+'Сервисы
+struct ProductService {
+
+}
+
+'Инфраструктура
+struct Config {
+
+}
+
+struct Server {
+
+}
+
+'Утилиты
+struct DB {
+
+}
+
+@enduml
