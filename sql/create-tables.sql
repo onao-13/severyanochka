@@ -28,6 +28,14 @@ CREATE TABLE categories(
     image_url VARCHAR(255)
 );
 
+CREATE TABLE articles(
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(100),
+    description VARCHAR(1000),
+    date DATE,
+    image_url VARCHAR(255)
+);
+
 -- ALTER TABLE products
 -- ADD CONSTRAINT FK_Products_Categories FOREIGN KEY(category_id)
 --     REFERENCES categories(id);

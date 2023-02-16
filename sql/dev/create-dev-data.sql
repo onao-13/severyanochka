@@ -19,3 +19,9 @@ INSERT INTO reviews(name, description, date, rating, product_id)
     VALUES('rev 2', 'des 2', '2023-02-14', 5, 1);
 INSERT INTO reviews(name, description, date, rating, product_id)
     VALUES('rev 3', 'des 3', '2023-02-14', 2, 2);
+
+-- ARTICLES DATA
+INSERT INTO articles(title, description, date, image_url)
+    VALUES('art 1', 'jwhefjwjjlkqjdevwnvnownwonfo', DATE(NOW()), 'qjkwcejv');
+INSERT INTO articles(title, description, date, image_url)
+    VALUES('art 2', 'wnevubbdiqbcwiub', DATE(NOW()), 'wfbewbevrnweur');
