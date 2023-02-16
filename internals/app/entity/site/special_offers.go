@@ -2,8 +2,8 @@ package site
 
 // SpecialOffers Таблица специальных предложений
 type SpecialOffers struct {
-	Id          int64
-	Title       string
-	Description string
-	ImageUrl    string
+	Id          int64  `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	ImageUrl    string `json:"image_url"`
 }
