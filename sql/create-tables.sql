@@ -8,7 +8,8 @@ CREATE TABLE products(
     brand VARCHAR(50),
     country VARCHAR(50),
     weight INT,
-    sale INT
+    sale INT,
+    category_id BIGINT
 );
 -- ADD CATEGORY_ID COLUMN
 
@@ -36,6 +37,13 @@ CREATE TABLE articles(
     image_url VARCHAR(255)
 );
 
--- ALTER TABLE products
--- ADD CONSTRAINT FK_Products_Categories FOREIGN KEY(category_id)
---     REFERENCES categories(id);
+CREATE TABLE special_offers(
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(100),
+    description VARCHAR(1000),
+    image_url VARCHAR(255)
+);
+
+ALTER TABLE products
+ADD CONSTRAINT FK_Products_Categories FOREIGN KEY(category_id)
+    REFERENCES categories(id);
