@@ -7,12 +7,11 @@ import (
 	"net/http"
 	"severyanochka/api"
 	"severyanochka/internals/app/controller/public"
-	help "severyanochka/internals/app/controller/public/help"
 	"severyanochka/internals/app/repository"
 	"severyanochka/internals/app/service"
 	"severyanochka/internals/config"
 	"severyanochka/internals/utils/db"
-	"severyanochka/internals/utils/md"
+	"severyanochka/internals/utils/parser"
 	"time"
 )
 
@@ -51,21 +50,25 @@ func (server *Server) Start() {
 
 	defer server.pool.Close()
 
+	varsParser := parser.NewRequestParserVars()
+
 	productRepository := repository.NewProductRepository(server.pool)
 	articleRepository := repository.NewArticleRepository(server.pool)
 	specialOffersRepository := repository.NewSpecialOffersRepository(server.pool)
+	categoryRepository := repository.NewCategoryRepository(server.pool)
 
 	productService := service.NewProductService(productRepository)
 	articleService := service.NewArticleService(articleRepository)
 	specialOffersService := service.NewSpecialOffersService(specialOffersRepository)
+	categoryService := service.NewCategoryService(categoryRepository, productService)
 
-	productController := public.NewProductController(productService)
-	helpController := help.New(md.New())
+	productController := public.NewProductController(productService, varsParser)
 	mainPageController := public.NewMainPageController(articleService, productService, specialOffersService)
-	articleController := public.NewArticleController(articleService)
+	articleController := public.NewArticleController(articleService, varsParser)
 	specialOffersController := public.NewSpecialOffersController(specialOffersService)
+	categoryController := public.NewCategoryController(categoryService, varsParser)
 
-	routes := api.CreateRoute(productController, helpController, mainPageController, articleController, specialOffersController)
+	routes := api.CreateRoute(productController, mainPageController, articleController, specialOffersController, categoryController)
 
 	server.srv = &http.Server{
 		Addr:    ":" + server.cfg.Port,
