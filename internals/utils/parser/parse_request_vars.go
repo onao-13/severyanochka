@@ -19,7 +19,7 @@ func NewRequestParserVars() *RequestParserVars {
 func (parser *RequestParserVars) ParseToInt64(r *http.Request, value string) int64 {
 	vars := mux.Vars(r)
 
-	id, err := strconv.ParseInt(vars["id"], 10, 64)
+	id, err := strconv.ParseInt(vars[value], 10, 64)
 	if err != nil {
 		log.Errorln("Error parse vars. Error: ", err)
 	}
