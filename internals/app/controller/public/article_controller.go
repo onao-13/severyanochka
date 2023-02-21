@@ -7,20 +7,22 @@ import (
 	"net/http"
 	"severyanochka/internals/app/handler/rest"
 	"severyanochka/internals/app/service"
-	"strconv"
+	"severyanochka/internals/utils/parser"
 )
 
 // ArticleController Контроллер для работы со статьями
 type ArticleController struct {
 	service *service.ArticleService
+	parser  *parser.RequestParserVars
 }
 
 var log = logrus.New()
 
 // NewArticleController Создает новый контроллер статей
-func NewArticleController(service *service.ArticleService) *ArticleController {
+func NewArticleController(service *service.ArticleService, parser *parser.RequestParserVars) *ArticleController {
 	controller := new(ArticleController)
 	controller.service = service
+	controller.parser = parser
 	return controller
 }
 
@@ -33,11 +35,7 @@ func (controller *ArticleController) FindById(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	id, err := strconv.ParseInt(vars["id"], 10, 64)
-	if err != nil {
-		log.Errorln("Error parse vars. Error: ", err)
-		return
-	}
+	id := controller.parser.ParseToInt64(r, "id")
 
 	article := controller.service.FindById(id)
 

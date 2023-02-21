@@ -8,5 +8,5 @@ type Articles struct {
 	Title       string    `json:"title"`
 	Description string    `json:"description"`
 	Date        time.Time `json:"date"`
-	ImageUrl    string    `json:"image_url"`
+	ImageUrl    string    `json:"imageUrl"`
 }
