@@ -4,10 +4,8 @@ go 1.19
 
 require (
 	github.com/georgysavva/scany v1.2.1
-	github.com/gomarkdown/markdown v0.0.0-20221013030248-663e2500819c
 	github.com/gorilla/mux v1.8.0
 	github.com/jackc/pgx/v4 v4.17.2
-	github.com/microcosm-cc/bluemonday v1.0.22
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.14.0
 )
