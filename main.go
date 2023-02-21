@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	config := config2.LoadDevConfig()
+	config := config2.LoadProdConfig()
 	ctx, cancel := context.WithCancel(context.Background())
 
 	s := make(chan os.Signal, 1)
