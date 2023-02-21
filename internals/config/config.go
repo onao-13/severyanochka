@@ -41,7 +41,7 @@ func LoadProdConfig() Config {
 	v.SetDefault("PORT", "8088")
 	v.SetDefault("DBUSER", "postgres")
 	v.SetDefault("DBPASS", "postgres")
-	v.SetDefault("DBHOST", "localhost")
+	v.SetDefault("DBHOST", "postgres")
 	v.SetDefault("DBPORT", "5432")
 	v.SetDefault("DBNAME", "severyanochka")
 
