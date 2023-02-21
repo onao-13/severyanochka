@@ -21,6 +21,7 @@ func NewProductService(repository *repository.ProductRepository) *ProductService
 	return service
 }
 
+// TODO: FIX THIS (send null)
 // GetStock Сервис для отображения акционных продуктов на главной /*
 func (service *ProductService) GetStock() []response.ProductResponse {
 	var products []response.ProductResponse
@@ -66,9 +67,24 @@ func (service *ProductService) SearchProductByName(name string) []response.Produ
 	return products
 }
 
+func (service *ProductService) FindAllProductsByCategoryId(id int64) []response.ProductResponse {
+	var products []response.ProductResponse
+
+	for _, p := range service.repository.FindAllProductsByCategoryId(id) {
+		products = append(products, createProductResponse(p))
+	}
+
+	return products
+}
+
+func (service *ProductService) FindById(id int64) product.Products {
+	return service.repository.FindById(id)
+}
+
 // Конвертирование product.Products в response.ProductResponse
 func createProductResponse(product product.Products) response.ProductResponse {
 	var result response.ProductResponse
+	result.Id = product.Id
 	result.Name = product.Name.String
 	result.Price = product.Price
 	result.ImageUrl = product.ImageUrl.String

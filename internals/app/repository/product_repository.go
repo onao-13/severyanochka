@@ -49,13 +49,13 @@ func (repository *ProductRepository) FindNewProduct() []product.Products {
 }
 
 func FindBoughtBefore() {
-	// TODO: ADD TABLE FOR SAVE USER BUYING PRODUCTS
+	//TODO: ADD TABLE FOR SAVE USER BUYING PRODUCTS
 }
 
 func (repository *ProductRepository) SearchByName(name string) ([]product.Products, error) {
 	var products []product.Products
 
-	query := "SELECT * FROM products WHERE name LIKE $1;"
+	query := "SELECT id, name, image_url, price, sale, rating, country FROM products WHERE name LIKE $1;"
 
 	err := pgxscan.Select(context.Background(), repository.pool, &products, query, name+"%")
 	if err != nil {
@@ -63,4 +63,30 @@ func (repository *ProductRepository) SearchByName(name string) ([]product.Produc
 	}
 
 	return products, err
+}
+
+func (repository *ProductRepository) FindById(id int64) product.Products {
+	var prod product.Products
+
+	query := "SELECT * FROM products WHERE id = $1"
+
+	err := pgxscan.Get(context.Background(), repository.pool, &prod, query, id)
+	if err != nil {
+		log.Infoln("No products found. Error: ", err)
+	}
+
+	return prod
+}
+
+func (repository *ProductRepository) FindAllProductsByCategoryId(id int64) []product.Products {
+	var products []product.Products
+
+	query := "SELECT id, name, image_url, price, sale, rating, country FROM products WHERE category_id = $1"
+
+	err := pgxscan.Select(context.Background(), repository.pool, &products, query, id)
+	if err != nil {
+		log.Infoln("No found products by category id ", id, ". Error: ", err)
+	}
+
+	return products
 }
