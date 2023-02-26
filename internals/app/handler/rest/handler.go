@@ -15,7 +15,7 @@ func WrapOk(data interface{}, w http.ResponseWriter) {
 
 // WrapError Обертка ответа со статусом 400
 func WrapError(err error, w http.ResponseWriter) {
-	wrapMessage(err, w, http.StatusBadRequest, "bad request")
+	wrapMessage(err, w, http.StatusBadRequest, "bad parser")
 }
 
 // WrapNotFound Обертка ответа со статусом 404

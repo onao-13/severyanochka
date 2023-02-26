@@ -10,18 +10,16 @@ import (
 	"severyanochka/internals/app/repository"
 	"severyanochka/internals/app/service"
 	"severyanochka/internals/config"
-	"severyanochka/internals/utils/db"
 	"severyanochka/internals/utils/parser"
 	"time"
 )
 
 // Server Сервер с конфигурацией и пулом для подключения к бд
 type Server struct {
-	cfg     config.Config
-	ctx     context.Context
-	srv     *http.Server
-	pool    *pgxpool.Pool
-	dbUtils *db.TableUtils
+	cfg  config.Config
+	ctx  context.Context
+	srv  *http.Server
+	pool *pgxpool.Pool
 }
 
 var log = logrus.New()
@@ -44,9 +42,6 @@ func (server *Server) Start() {
 	if err != nil {
 		log.Fatalln("Error connecting to database: ", err)
 	}
-
-	server.dbUtils = db.New(server.pool, server.ctx)
-	initializeDb(server.dbUtils)
 
 	defer server.pool.Close()
 
@@ -88,7 +83,6 @@ func (server *Server) Shutdown() {
 	log.Infoln("Server stopped")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	dropTables(server.dbUtils)
 
 	defer func() {
 		cancel()
@@ -103,13 +97,4 @@ func (server *Server) Shutdown() {
 	if err == http.ErrServerClosed {
 		err = nil
 	}
-}
-
-func initializeDb(utils *db.TableUtils) {
-	utils.CreateTables()
-	utils.UploadDevData()
-}
-
-func dropTables(utils *db.TableUtils) {
-	utils.DropTables()
 }

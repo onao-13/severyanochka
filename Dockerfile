@@ -9,7 +9,6 @@ RUN go mod download
 
 COPY api ./api
 COPY internals ./internals
-COPY sql ./sql
 COPY main.go ./
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
@@ -18,4 +17,4 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build
 FROM scratch
 COPY --from=build /service/severyanochka ./severyanochka
 EXPOSE 8088
-ENTRYPOINT["/severyanochka"]
+ENTRYPOINT ["/severyanochka"]
